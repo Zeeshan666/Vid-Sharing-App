@@ -1,0 +1,16 @@
+{
+  "name": "chai-backend-task",
+  "version": "1.0.0",
+  "description": "nodebackend",
+  "main": "index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chai",
+    "backend",
+    "node"
+  ],
+  "author": "zeeshan",
+  "license": "ISC"
+}
