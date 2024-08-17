@@ -1,15 +1,13 @@
-import dotenv from "dotenv"
-import express from "express";
+import dotenv from "dotenv";
+import app from "./app.js";
 import connection from "./db/index.js";
 
-
 dotenv.config({
-    path:'../env'
-})
-const app = express();
+  path: "../env",
+});
 
 connection().then(() => {
-  app.listen(process.env.PORT, (req, res) => {
+  app.listen(process.env.PORT || 9000, (req, res) => {
     console.log(`server started at  ${process.env.PORT}`);
   });
 });
