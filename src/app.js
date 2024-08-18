@@ -15,4 +15,7 @@ app.use(
   })
 );
 
+import UserRoutes from "./routes/user.js"
+app.use('api/v1/users',UserRoutes)
+
 export default app;

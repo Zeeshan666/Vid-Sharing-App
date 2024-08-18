@@ -1,4 +1,4 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const VideoSchema = new mongoose.Schema(
@@ -41,6 +41,8 @@ const VideoSchema = new mongoose.Schema(
   }
 );
 
-VideoSchema.plugin(mongooseAggregatePaginate)
+VideoSchema.plugin(mongooseAggregatePaginate);
 
-export default Video = mongoose.Model("Video", VideoSchema);
+const Video = mongoose.Model("Video", VideoSchema);
+
+export default Video;
