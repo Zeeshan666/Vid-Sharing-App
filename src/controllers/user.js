@@ -22,13 +22,22 @@ const registerUser = async (req, res) => {
 
   //avatar image
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
   }
 
   const avatar = await Cloudnary(avatarLocalPath);
+  let coverImageLocalPath;
+
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverImageLocalPath = req.files.coverImage[0].path;
+  }
+
   const coverImage = await Cloudnary(coverImageLocalPath);
 
   const createdUser = await User.create({
@@ -43,7 +52,6 @@ const registerUser = async (req, res) => {
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while registering the user");
   }
-  
 
   return res
     .status(201)

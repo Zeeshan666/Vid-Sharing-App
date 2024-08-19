@@ -14,10 +14,10 @@ const uploadOnCloudnary = async function (localPath) {
       resource_type: "auto",
     });
     console.log(response.url);
-    fs.unlinkSync(localFilePath);
+    fs.unlinkSync(localPath);
     return response;
   } catch (err) {
-    fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
+    fs.unlinkSync(localPath); // remove the locally saved temporary file as the upload operation got failed
     return null;
   }
 };

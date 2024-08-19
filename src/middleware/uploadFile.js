@@ -1,5 +1,6 @@
 import multer from "multer";
 import { promises as fsPromises } from "fs";
+import path from "path";
 
 const dirPath = "./public/temp";
 
