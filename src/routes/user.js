@@ -1,7 +1,7 @@
 import express from "express";
-import { registerUser, getUser } from "../controllers/user.js";
+import { registerUser, logout, login } from "../controllers/user.js";
 import Upload from "../middleware/uploadFile.js";
-
+import Auth from "../middleware/auth.js";
 const app = express.Router();
 
 const Images = [
@@ -16,6 +16,9 @@ const Images = [
 ];
 
 app.post("/register", Upload.fields(Images), registerUser);
-app.get("/getAll", getUser);
+app.post("/login", login);
+
+//secure routes
+app.get("/logout", Auth,logout);
 
 export default app;
