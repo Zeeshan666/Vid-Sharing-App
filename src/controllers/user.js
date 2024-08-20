@@ -76,13 +76,6 @@ const registerUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  // req body -> data
-  // username or email
-  //find the user
-  //password check
-  //access and referesh token
-  //send cookie
-
   const { email, username, password } = req.body;
   if (!email || !username) {
     throw new ApiError(400, "email or username is missgin");
