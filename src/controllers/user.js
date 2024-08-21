@@ -19,7 +19,6 @@ const generateAccessAndRefreshToken = async (userId) => {
     throw new ApiError(500, "Something bad happened");
   }
 };
-
 const registerUser = async (req, res) => {
   const { fullName, email, username, password } = req.body;
 
@@ -74,7 +73,6 @@ const registerUser = async (req, res) => {
     .status(201)
     .json(new ApiResponse(200, createdUser, "User registered Successfully"));
 };
-
 const login = async (req, res) => {
   const { email, username, password } = req.body;
   if (!email || !username) {
@@ -118,7 +116,6 @@ const login = async (req, res) => {
       )
     );
 };
-
 const logout = async (req, res) => {
   const user = req?.user;
   await User.findByIdAndUpdate(req?.user?._id, {
@@ -139,7 +136,6 @@ const logout = async (req, res) => {
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged Out"));
 };
-
 const getRefreshAcccesToken = async (req, res) => {
   const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken;
   if (!getUserToken) {
@@ -183,13 +179,11 @@ const getRefreshAcccesToken = async (req, res) => {
       );
   } catch (err) {}
 };
-
 const getUser = async (req, res) => {
   res.status(200).json({
     message: "user",
   });
 };
-
 const changeCurrentPassword = async (req, res) => {
   const { newPassword, oldPassword } = req.body;
   if (!newPassword || !oldPassword) {
