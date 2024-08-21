@@ -190,4 +190,101 @@ const getUser = async (req, res) => {
   });
 };
 
-export { registerUser, getUser, login, logout, getRefreshAcccesToken };
+const changeCurrentPassword = async (req, res) => {
+  const { newPassword, oldPassword } = req.body;
+  if (!newPassword || !oldPassword) {
+    throw new ApiError(400, "All fields are required");
+  }
+  const user = await User.findById(req.user?._id);
+  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "invalid password");
+  }
+  User.findOneAndUpdate(
+    user?._id,
+    { $set: { password: newPassword } },
+    { new: true }
+  );
+};
+const getCurrentUser = async (req, res) => {
+  res.send(200).json(new ApiResponse(200, req?.user, "current user"));
+};
+const updateAccountDetails = async (req, res) => {
+  const { fullName } = req.body;
+  if (!fullName) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const user = await User.findOneAndUpdate(
+    req?.user?._id,
+    {
+      $set: {
+        username,
+      },
+    },
+    { new: true }
+  );
+
+  res.send(200).json(new ApiResponse(200, user, "User updated successfully"));
+};
+const updateUserAvatar = async (req, res) => {
+  const avatarLocalPath = req?.file?.path;
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "Invalid path");
+  }
+  const avatar = await Cloudnary(avatarLocalPath);
+  if (!avatar?.url) {
+    throw new ApiError(400, "upload failed");
+  }
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        avatar: avatar,
+      },
+    },
+    { new: true }
+  );
+
+  res
+    .send(200)
+    .json(new ApiResponse(200, user, "Avatar uploaded successfully"));
+};
+const updateUserCoverImage = async (req, res) => {
+  const coverImageLocalPath = req.file[0].path;
+  if (!coverImageLocalPath) {
+    throw new ApiError(400, "Cover Image is required");
+  }
+
+  const coverImage = await Cloudnary(coverImageLocalPath);
+  if (!coverImageLocalPath?.url) {
+    throw new ApiError(400, "Cover Image is required");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        coverImage,
+      },
+    },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Cover image updated successfully"));
+};
+
+export {
+  registerUser,
+  getUser,
+  login,
+  logout,
+  getRefreshAcccesToken,
+  changeCurrentPassword,
+  updateAccountDetails,
+  updateUserAvatar,
+  updateUserCoverImage,
+  getCurrentUser,
+};
