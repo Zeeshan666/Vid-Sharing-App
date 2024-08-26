@@ -9,6 +9,8 @@ import {
   updateAccountDetails,
   updateUserAvatar,
   updateUserCoverImage,
+  getChannelProfile,
+  getWatchHistory
 } from "../controllers/user.js";
 
 import Upload from "../middleware/uploadFile.js";
@@ -47,4 +49,7 @@ app.patch(
   updateUserCoverImage
 );
 
+app.get("/channel/:username",Auth,getChannelProfile)
+
+app.get("/history",Auth,getWatchHistory)
 export default app;
